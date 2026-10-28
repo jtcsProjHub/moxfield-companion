@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Collection Companion</title>
+  <link rel="stylesheet" href="../ui/ui.css">
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+  <header>
+    <div class="row">
+      <strong>Collection Companion</strong>
+      <span class="spacer"></span>
+      <a href="#" id="open-manager" title="Sync decks, collection and Scryfall data">Manage data</a>
+    </div>
+    <div id="status" class="muted small"></div>
+    <div id="job" class="small" hidden><span id="job-text"></span><div class="progress"><div></div></div></div>
+    <nav id="tabs">
+      <button data-tab="card" class="active">Card</button>
+      <button data-tab="deck">Deck</button>
+      <button data-tab="explore">Explore</button>
+    </nav>
+  </header>
+  <main>
+    <section id="tab-card"></section>
+    <section id="tab-deck" hidden></section>
+    <section id="tab-explore" hidden></section>
+  </main>
+  <script src="../lib/util.js"></script>
+  <script src="../ui/common.js"></script>
+  <script src="sidebar.js"></script>
+</body>
+</html>

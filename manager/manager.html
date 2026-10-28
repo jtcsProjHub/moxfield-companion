@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Collection Companion: Manage data</title>
+  <link rel="stylesheet" href="../ui/ui.css">
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+  <div class="page">
+    <h1>Collection Companion</h1>
+    <p class="muted">All data stays in this browser profile. Nothing syncs on its own except the optional Scryfall refresh.</p>
+    <div id="job" class="callout" hidden><span id="job-text"></span><div class="progress"><div></div></div></div>
+    <div id="last" class="small"></div>
+
+    <section>
+      <h2>1. Scryfall card data and tags</h2>
+      <p class="muted small">Card text comes from Scryfall's Oracle Cards bulk file (about 25 MB). Function tags come from Scryfall Tagger's Oracle Tags bulk file (about 6 MB). Both update daily on Scryfall.</p>
+      <div id="scry-status" class="small"></div>
+      <div class="row">
+        <button id="scry-sync" class="primary">Download now</button>
+        <label>Refresh every <input id="auto-days" type="number" min="0" max="90" style="width:4em"> days (0 = only on command)</label>
+      </div>
+      <details class="small">
+        <summary>Import files you downloaded yourself</summary>
+        <p class="muted">Use the <code>oracle-cards-*.jsonl.gz</code> and <code>oracle-tags-*.jsonl.gz</code> files from <a href="https://scryfall.com/docs/api/bulk-data" target="_blank">scryfall.com/docs/api/bulk-data</a>.</p>
+        <div class="row">
+          <label>Oracle cards <input id="file-cards" type="file" accept=".gz,.json,.jsonl"></label>
+          <label>Oracle tags <input id="file-tags" type="file" accept=".gz,.json,.jsonl"></label>
+        </div>
+      </details>
+    </section>
+
+    <section>
+      <h2>2. Your collection</h2>
+      <div id="col-status" class="small"></div>
+      <h3>Import a file</h3>
+      <p class="muted small">On Moxfield, open your collection and use Export (CSV). Rows marked as proxy (playtest) are kept as playtest copies. A plain list such as "4 Lightning Bolt" also works.</p>
+      <div class="row">
+        <input id="col-file" type="file" accept=".csv,.txt">
+        <label><input type="radio" name="col-mode" value="replace" checked> Replace</label>
+        <label><input type="radio" name="col-mode" value="add"> Add to current</label>
+      </div>
+      <h3>Or sync a public collection</h3>
+      <p class="muted small">This needs your Moxfield collection to be public. Leave the box empty to find it from the user name in section 3, or paste its link (moxfield.com/collection/…).</p>
+      <div class="row">
+        <input id="col-id" type="text" placeholder="Found from your user name, or paste https://moxfield.com/collection/…" style="flex:1">
+        <button id="col-sync">Sync collection</button>
+      </div>
+      <details class="small" id="unmatched-wrap">
+        <summary>Names not found in the card data</summary>
+        <p class="muted">Usually tokens, emblems and other non-deck cards.</p>
+        <div id="unmatched" class="small"></div>
+      </details>
+      <div class="row"><button id="col-clear" class="small">Remove collection</button></div>
+    </section>
+
+    <section>
+      <h2>3. Your decks</h2>
+      <p class="muted small">Public decks only. Cards in counted decks are not "free" in other decks. Sync updates only decks that changed on Moxfield.</p>
+      <div class="row">
+        <label>Moxfield user name <input id="username" type="text" placeholder="your user name"></label>
+        <button id="decks-sync" class="primary">Sync all decks</button>
+        <button id="decks-sync-force" title="Fetch every deck again, changed or not">Full resync</button>
+      </div>
+      <div class="row">
+        <input id="deck-add" type="text" placeholder="Add one deck by link or id (for example an unlisted deck)" style="flex:1">
+        <button id="deck-add-btn">Add and sync</button>
+      </div>
+      <div id="decks-sync-status" class="small muted"></div>
+      <h3>Formats that count</h3>
+      <div id="formats" class="row"></div>
+      <h3>Decks</h3>
+      <div class="row small">
+        <label>Show format <select id="deck-filter"><option value="">all</option></select></label>
+        <input id="deck-search" type="search" placeholder="Filter by name">
+      </div>
+      <table id="decks">
+        <thead><tr><th title="Count this deck's cards as in use">Counts</th><th>Deck</th><th>Format</th><th>Cards</th><th>Updated on Moxfield</th><th>Synced</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. Settings</h2>
+      <h3>Boards that use up copies</h3>
+      <div id="boards" class="row"></div>
+      <div class="row">
+        <label><input id="include-playtest" type="checkbox"> Count playtest copies from my collection as owned (shown in blue, marked "P")</label>
+      </div>
+      <div class="row">
+        <label><input id="count-proxies" type="checkbox"> Deck entries marked as proxy on Moxfield use up copies</label>
+      </div>
+      <div class="row">
+        <label><input id="highlight" type="checkbox"> Show badges and colors on Moxfield deck pages</label>
+      </div>
+      <div class="row">
+        <label><input id="hide-cycle" type="checkbox"> Hide "cycle-…" tags when exploring</label>
+      </div>
+      <h3>Hidden tags</h3>
+      <div id="hidden-tags" class="chips"></div>
+    </section>
+
+    <section>
+      <h2>Reset</h2>
+      <button id="clear-all">Delete all local data</button>
+    </section>
+  </div>
+  <script src="../lib/util.js"></script>
+  <script src="../lib/db.js"></script>
+  <script src="../lib/scryfall.js"></script>
+  <script src="../lib/moxfield.js"></script>
+  <script src="../ui/common.js"></script>
+  <script src="manager.js"></script>
+</body>
+</html>

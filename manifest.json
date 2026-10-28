@@ -1,0 +1,71 @@
+{
+  "manifest_version": 2,
+  "name": "Collection Companion for Moxfield",
+  "short_name": "Collection Companion",
+  "version": "0.2.0",
+  "description": "Shows which cards in a Moxfield deck you have free copies of, finds similar cards in your collection, and lets you explore your collection by Scryfall Tagger tags.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "collection-companion@local.dev",
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "menus",
+    "tabs",
+    "https://moxfield.com/*",
+    "https://www.moxfield.com/*",
+    "https://api2.moxfield.com/*",
+    "https://api.scryfall.com/*",
+    "https://data.scryfall.io/*"
+  ],
+  "background": {
+    "scripts": [
+      "lib/util.js",
+      "lib/db.js",
+      "lib/scryfall.js",
+      "lib/moxfield.js",
+      "lib/engine.js",
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://moxfield.com/*", "https://www.moxfield.com/*"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "sidebar_action": {
+    "default_title": "Collection Companion",
+    "default_panel": "sidebar/sidebar.html",
+    "default_icon": "icons/icon.svg",
+    "open_at_install": false
+  },
+  "browser_action": {
+    "default_title": "Toggle the Collection Companion sidebar",
+    "default_icon": "icons/icon.svg"
+  },
+  "options_ui": {
+    "page": "manager/manager.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": { "default": "Alt+Shift+M" },
+      "description": "Toggle the Collection Companion sidebar"
+    }
+  }
+}

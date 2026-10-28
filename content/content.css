@@ -1,0 +1,72 @@
+/* Status colors. They work on Moxfield's light and dark themes. */
+[data-mc] { --mc-c: transparent; }
+[data-mc="ok"] { --mc-c: #2e9e5b; }
+[data-mc="playtest"] { --mc-c: #2a8fc4; }
+[data-mc="short"] { --mc-c: #d9a21b; }
+[data-mc="used"] { --mc-c: #e0702a; }
+[data-mc="missing"] { --mc-c: #d23c3c; }
+[data-mc="proxy"] { --mc-c: #8a7fd6; }
+[data-mc="unknown"] { --mc-c: #888; }
+
+/* Text views: a colored bar on the left of the row. */
+li[data-mc]:not([data-mc="basic"]) { box-shadow: inset 3px 0 0 var(--mc-c); }
+
+/* Visual views: a colored ring around the card image. */
+.decklist-card[data-mc]:not([data-mc="basic"]) .img-card,
+[data-testid="deck-view-stack-card"][data-mc]:not([data-mc="basic"]) .img-card {
+  outline: 3px solid var(--mc-c);
+  outline-offset: -3px;
+  border-radius: 4.75% / 3.5%;
+}
+/* Playtest coverage: dashed, so it reads as "covered, but not by real cards". */
+.decklist-card[data-mc="playtest"] .img-card,
+[data-testid="deck-view-stack-card"][data-mc="playtest"] .img-card { outline-style: dashed; }
+li[data-mc="playtest"] {
+  box-shadow: none;
+  background-image: repeating-linear-gradient(180deg, var(--mc-c) 0 4px, transparent 4px 7px);
+  background-size: 3px 100%;
+  background-repeat: no-repeat;
+}
+.mc-badge[data-status="playtest"] { background: repeating-linear-gradient(135deg, var(--mc-c) 0 6px, #217aa8 6px 9px); }
+
+.mc-badge {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 5px;
+  border-radius: 9px;
+  font: 600 11px/17px system-ui, sans-serif;
+  text-align: center;
+  color: #fff;
+  background: var(--mc-c, #666);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.mc-badge:hover { filter: brightness(1.15); }
+.mc-badge.mc-inline { margin-left: 6px; vertical-align: 1px; }
+.mc-badge.mc-overlay {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+#mc-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  max-width: min(90vw, 460px);
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  font: 13px/1.4 system-ui, sans-serif;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 2147483647;
+}
+#mc-toast.mc-show { opacity: 1; transform: translate(-50%, 0); }

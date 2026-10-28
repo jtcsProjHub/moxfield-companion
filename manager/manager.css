@@ -1,0 +1,14 @@
+body { background: var(--bg); }
+.page { max-width: 980px; margin: 0 auto; padding: 16px 20px 60px; }
+h1 { font-size: 22px; margin: 8px 0 4px; }
+h2 { font-size: 16px; margin: 0 0 6px; }
+h3 { font-size: 13px; margin: 14px 0 4px; }
+section { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+section .row { margin: 6px 0; }
+table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 12px; }
+th, td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { color: var(--fg2); font-weight: 600; }
+tr.excluded td { opacity: 0.5; }
+tr.excluded td:first-child { opacity: 1; }
+code { background: var(--bg2); padding: 0 4px; border-radius: 4px; }
+#unmatched { max-height: 200px; overflow: auto; columns: 3; }
